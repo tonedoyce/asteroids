@@ -2,6 +2,8 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+
+#import scr size, asteroid attrbts from constants.py
 from constants import *
 
 def main():
