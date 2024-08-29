@@ -22,17 +22,16 @@ def main():
 		#time variable
 	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT/2)
 	while True:
+		# frame delay
+		dt = clock.tick(60) / 1000
 		# game loop
 		for event in pygame.event.get():
 			# input check
 			if event.type == pygame.QUIT:
 				return
 		
-		clock.tick(60)
-		# frame delay
-		dt = clock.tick(60) / 1000
-
 		screen.fill("black", rect=None, special_flags=0)
+		player.update(dt)
 		player.draw(screen)
 		pygame.display.flip()
 			# refresh screen
