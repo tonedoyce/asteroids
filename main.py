@@ -1,6 +1,8 @@
 #import pygame
 import pygame
 
+import sys
+
 #import scr size, objects attrbts from constants.py
 from constants import *
 
@@ -65,6 +67,9 @@ def main():
 			d_object.draw(screen)
 		pygame.display.flip()
 			# refresh screen
+		for asteroid in asteroids:
+			if asteroid.is_collide(player):
+				sys.exit("GAME OVER")
 
 if __name__ == "__main__":
 	main()
