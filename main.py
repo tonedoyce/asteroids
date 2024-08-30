@@ -7,6 +7,10 @@ from constants import *
 #import player class
 from player import Player
 
+#import asteroid class, asteroidfield
+from asteroid import *
+from asteroidfield import *
+
 def main():
 	pygame.init
 		#initialized pygame
@@ -20,11 +24,30 @@ def main():
 		# setup clock object
 	dt = 0 				
 		#time variable
-	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT/2)
+	
+
+		# define groups that contain objects
 	updatable = pygame.sprite.Group()
 	drawable = pygame.sprite.Group()
-	updatable.add(player)
-	drawable.add(player)
+	asteroids = pygame.sprite.Group()
+
+		# static group container for class
+	AsteroidField.containers = (updatable,)
+	Player.containers = (updatable, drawable)
+	Asteroid.containers = (updatable, drawable, asteroids)
+	
+		# instantialize objects
+	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT/2)
+	asteroidfield = AsteroidField()
+
+		# assign groups to objects
+	player.containers = (updatable, drawable)
+	print(f"player in dr: {player in drawable} , player in ud: {player in updatable}")
+			## alternatively: groupname.add(player)
+	
+	
+
+
 	while True:
 		# frame delay
 		dt = clock.tick(60) / 1000
