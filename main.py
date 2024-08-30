@@ -21,6 +21,10 @@ def main():
 	dt = 0 				
 		#time variable
 	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT/2)
+	updatable = pygame.sprite.Group()
+	drawable = pygame.sprite.Group()
+	updatable.add(player)
+	drawable.add(player)
 	while True:
 		# frame delay
 		dt = clock.tick(60) / 1000
@@ -31,8 +35,11 @@ def main():
 				return
 		
 		screen.fill("black", rect=None, special_flags=0)
-		player.update(dt)
-		player.draw(screen)
+		for u_object in updatable:
+			u_object.update(dt)
+			# movement on input
+		for d_object in drawable:
+			d_object.draw(screen)
 		pygame.display.flip()
 			# refresh screen
 
