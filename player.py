@@ -1,14 +1,17 @@
 # import circleshape class, screen and player attributes
 from circleshape import *
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from shot import *
 
 class Player(CircleShape):
+    
     containers = None
     
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.position = pygame.Vector2(x,y)
         self.rotation = 0
+
 
     def triangle(self):
         # will look like triangle but have circle hitbox
@@ -32,9 +35,26 @@ class Player(CircleShape):
         # moves the player
         self.position += pygame.Vector2(0,1).rotate(self.rotation) * PLAYER_SPEED * dt
 
+    shot_count = 0
+    shot_cooldown = 0
+
+    def shoot(self):
+        if self.shot_cooldown <= 0:
+            shot = Shot(self.position.x, self.position.y)
+            shot.velocity = pygame.Vector2(0,1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
+            self.shot_count += 1
+            if self.shot_count >= 5:
+                self.shot_cooldown = 0.3
+
     
     def update(self, dt):
         # call movement fcts on key prss
+        if self.shot_cooldown > 0:
+            self.shot_cooldown -= dt
+        if self.shot_cooldown < 0:
+            self.shot_cooldown = 0
+            self.shot_count = 0
+
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -45,3 +65,5 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
+        if keys[pygame.K_SPACE]:
+            self.shoot()
