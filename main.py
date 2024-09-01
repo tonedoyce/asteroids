@@ -73,6 +73,11 @@ def main():
 		for asteroid in asteroids:
 			if asteroid.is_collide(player):
 				sys.exit("GAME OVER")
+			for shot in shots:
+				for asteroid in asteroids:
+					if shot.is_collide(asteroid):
+						shot.kill()
+						asteroid.split()
 
 if __name__ == "__main__":
 	main()

@@ -17,3 +17,9 @@ class Asteroid(CircleShape):
     def update(self, dt):
         # overrides circleshape.update
         self.position += self.velocity * dt
+
+    def split(self):
+        if True:
+            self.kill()
+        else:
+            pass
